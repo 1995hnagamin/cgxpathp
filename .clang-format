@@ -1,0 +1,6 @@
+---
+AlwaysBreakAfterDefinitionReturnType: true
+ColumnLimit: 79
+IndentWidth: 4
+Language: Cpp
+UseTab: Never
