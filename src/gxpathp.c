@@ -57,6 +57,10 @@ main(int argc, char **argv) {
         return exit_code_invalid_arg;
     }
 
+    if (!strlen(argv[1])) {
+        printf("invalid pattern\n");
+        return exit_code_invalid_arg;
+    }
     xmlXPathCompExprPtr xpath = make_xpath_comp_expr(argv[1]);
 
     for (int i = 2; i < argc; ++i) {
