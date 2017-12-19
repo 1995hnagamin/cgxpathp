@@ -42,7 +42,7 @@ execute_file(char const *filename, xmlXPathCompExprPtr xpath) {
     int const size = nodes->nodeNr;
     for (int i = 0; i < size; ++i) {
         assert(nodes->nodeTab[i]);
-        printf("%s:%s\n", filename, pattern);
+        printf("%s:%s\n", filename, nodes->nodeTab[i]->name);
     }
 
     xmlXPathFreeObject(xpath_obj);
