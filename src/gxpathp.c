@@ -1,10 +1,26 @@
 #include <assert.h>
 #include <stdio.h>
+#include <string.h>
 #include <libxml/tree.h>
 #include <libxml/parser.h>
 #include <libxml/xpath.h>
 
 int const exit_code_invalid_arg = 2;
+
+xmlXPathCompExprPtr
+make_xpath_comp_expr(char const *pattern) {
+    assert(pattern && (strlen(pattern) > 0));
+    if (pattern[0] == '/') {
+        return xmlXPathCompile(BAD_CAST pattern);
+    }
+    const char *prefix = "//";
+    size_t len = strlen(prefix) + strlen(pattern);
+    char *buf = (char *)(malloc(len + 1));
+    strcpy(buf, prefix);
+    strcat(buf, pattern);
+    buf[len] = '\0';
+    return xmlXPathCompile(BAD_CAST buf);
+}
 
 void
 execute_file(char const *filename, char const *pattern) {
