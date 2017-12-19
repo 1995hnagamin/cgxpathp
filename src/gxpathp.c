@@ -23,7 +23,7 @@ make_xpath_comp_expr(char const *pattern) {
 }
 
 void
-execute_file(char const *filename, char const *pattern) {
+execute_file(char const *filename, xmlXPathCompExprPtr xpath) {
     xmlDocPtr doc = xmlParseFile(filename);
     xmlXPathContextPtr ctxt = xmlXPathNewContext(doc);
     if (!ctxt) {
@@ -31,7 +31,7 @@ execute_file(char const *filename, char const *pattern) {
         return;
     }
 
-    xmlXPathObjectPtr xpath_obj = xmlXPathEval(BAD_CAST pattern, ctxt);
+    xmlXPathObjectPtr xpath_obj = xmlXPathCompiledEval(xpath, ctxt);
     if (!xpath_obj) {
         xmlXPathFreeContext(ctxt);
         xmlFreeDoc(doc);
@@ -57,8 +57,11 @@ main(int argc, char **argv) {
         return exit_code_invalid_arg;
     }
 
+    xmlXPathCompExprPtr xpath = make_xpath_comp_expr(argv[1]);
+
     for (int i = 2; i < argc; ++i) {
-        execute_file(argv[i], argv[1]);
+        execute_file(argv[i], xpath);
     }
+    xmlXPathFreeCompExpr(xpath);
     return 0;
 }
