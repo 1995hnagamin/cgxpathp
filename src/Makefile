@@ -1,7 +1,6 @@
 .PHONY: clean
 
 GXPATHP = ../gxpathp
-CC = clang
 CFLAGS = -Wall -Wextra -pedantic $(PKG_CFLAGS)
 LIBS = $(PKG_LIBS)
 PKG_CFLAGS = $(shell pkg-config --cflags libxml-2.0 2>/dev/null)
